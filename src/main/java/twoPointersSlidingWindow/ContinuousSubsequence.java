@@ -18,7 +18,6 @@ public class ContinuousSubsequence {
             }
         }
 
-
         return answer;
     }
 
