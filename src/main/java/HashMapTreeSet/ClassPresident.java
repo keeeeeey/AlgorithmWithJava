@@ -10,6 +10,17 @@ public class ClassPresident {
         for (char x : str.toCharArray()) {
             map.put(x, map.getOrDefault(x, 0) + 1);
         }
+
+        // HashMap에 해당 키가 존재하는지 확인 true, false 반환
+        System.out.println(map.containsKey('A')); // true
+
+        // 키의 개수를 알려준다.
+        System.out.println(map.size()); // 5
+
+        // 특정 키를 삭제
+        System.out.println(map.remove('A')); // A의 개수 3을 리턴
+        System.out.println(map.size()); // 4
+
         int max = Integer.MIN_VALUE;
         for (char key : map.keySet()) {
             if (map.get(key) > max) {
