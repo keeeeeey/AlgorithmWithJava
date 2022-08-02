@@ -16,13 +16,12 @@ public class LeastRecentlyUsed {
                 for (int i = s - 1; i >= 1; i--) {
                     answer[i] = answer[i - 1];
                 }
-                answer[0] = x;
             } else {
                 for (int i = pos; i >= 1; i--) {
                     answer[i] = answer[i - 1];
                 }
-                answer[0] = x;
             }
+            answer[0] = x;
         }
         return answer;
     }
