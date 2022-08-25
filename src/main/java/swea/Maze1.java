@@ -44,7 +44,7 @@ public class Maze1 {
             for (int i = 0; i < 16; i++) {
                 String row = sc.next();
                 for (int j = 0; j < 16; j++) {
-                    maze[i][j] = Character.getNumericValue(row.charAt(j));
+                    maze[i][j] = row.charAt(j) - '0';
                 }
             }
 
