@@ -4,25 +4,22 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[] arr = new int[9];
-        for (int i = 0; i < 9; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
-        }
-
-        int maxNumber = Integer.MIN_VALUE;
-        int idx = 0;
-
-        for (int i = 0; i < 9; i++) {
-            if (maxNumber < arr[i]) {
-                maxNumber = arr[i];
-                idx = i + 1;
+    public int solution(String str) {
+        String original = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isAlphabetic(str.charAt(i))) {
+                original += str.charAt(i);
             }
         }
+        int answer = Integer.parseInt(original);
+        return answer;
+    }
 
-        System.out.println(maxNumber);
-        System.out.println(idx);
+    public static void main(String[] args) throws IOException {
+        Main m = new Main();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        System.out.println(m.solution(str));
     }
 
 }

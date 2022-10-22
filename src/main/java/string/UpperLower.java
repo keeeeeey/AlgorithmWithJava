@@ -6,16 +6,16 @@ public class UpperLower {
     public String solution(String str) {
         String answer = "";
         for (char c : str.toCharArray()) {
-//            if (Character.isLowerCase(c)) {
-//                answer += Character.toUpperCase(c);
-//            } else {
-//                answer += Character.toLowerCase(c);
-//            }
-            if (c >= 97 && c <= 122) {
-                answer += (char)(c - 32);
+            if (Character.isLowerCase(c)) {
+                answer += Character.toUpperCase(c);
             } else {
-                answer += (char)(c + 32);
+                answer += Character.toLowerCase(c);
             }
+//            if (c >= 97 && c <= 122) {
+//                answer += (char)(c - 32);
+//            } else {
+//                answer += (char)(c + 32);
+//            }
         }
 
         return answer;
