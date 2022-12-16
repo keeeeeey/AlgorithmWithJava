@@ -1,38 +1,40 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
 public class Main {
-    public static int splitAndSum(String text) {
-        if (isEmpty(text)) return 0;
+    public static int solution(int n, int[] arr) {
+        int answer = 0;
+        int stone = -1;
+        while (true) {
+            if (stone + 3 > n - 1) {
+                break;
+            }
 
-        return getSum(toInts(text.split("-")));
-    }
-
-    public static int[] toInts(String[] values) {
-        int[] numbers = new int[values.length];
-
-        for (int i = 0; i < values.length; i++) {
-            numbers[i] = Integer.parseInt(values[i]);
+            int nextStone = 0;
+            int minPoison = 1000;
+            for (int i = stone + 1; i <= stone + 3; i++) {
+                if (arr[i] <= minPoison) {
+                    nextStone = i;
+                    minPoison = arr[i];
+                }
+            }
+            stone = nextStone;
+            answer += minPoison;
         }
 
-        return numbers;
+        return answer;
     }
-
-    public static int getSum(int[] numbers) {
-        int sum = 0;
-        for (int number : numbers) {
-            sum += number;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int[] arr = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        return sum;
-    }
-
-    public static boolean isEmpty(String text) {
-        if (text == null) return true;
-        return text.isEmpty();
-    }
-
-    public static void main(String[] args) {
-
-        int ret = splitAndSum("11-22-33");
-
-        System.out.println(ret);
-
+        System.out.println(solution(n, arr));
     }
 }
