@@ -49,7 +49,7 @@ public class Ranking2 {
         }
     }
 
-    public static void checkUnderK(String name, int score, int K) {
+    public static void check(String name, int score, int K) {
         int nameIdx = nameCheck(name, K);
         int scoreIdx = scoreCheck(score, K);
 
@@ -60,20 +60,6 @@ public class Ranking2 {
                 list.add(scoreIdx, new Score(name, score));
             }
             answer += 1;
-        } else {
-            insertScore(name, score, nameIdx, scoreIdx);
-        }
-    }
-
-    public static void check(String name, int score, int K) {
-        int nameIdx = nameCheck(name, K);
-        int scoreIdx = scoreCheck(score, K);
-
-        if (nameIdx == 101) {
-            if (scoreIdx != 101) {
-                list.add(scoreIdx, new Score(name, score));
-                answer += 1;
-            }
         } else {
             insertScore(name, score, nameIdx, scoreIdx);
         }
@@ -90,7 +76,7 @@ public class Ranking2 {
                 list.add(new Score(name, score));
                 answer += 1;
             } else if (list.size() < K) {
-                checkUnderK(name, score, list.size());
+                check(name, score, list.size());
             } else {
                 check(name, score, K);
             }
