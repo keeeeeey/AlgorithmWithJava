@@ -19,20 +19,9 @@ public class Sumba {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
+    public static int[] dist;
 
-        int[] dist = new int[K * 2];
-
-        for (int i = 0; i < dist.length; i++) {
-            dist[i] = Integer.MAX_VALUE;
-        }
-
-        dist[N] = 0;
-
+    public static void solution(int N, int K) {
         PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -48,12 +37,38 @@ public class Sumba {
             if (dist[now.cur] < now.acc) continue;
 
             for (Node node : new Node[]{new Node(now.cur + 1, 1), new Node(now.cur - 1, 1), new Node(now.cur * 2, 0)}) {
+                if (node.cur >= dist.length || node.cur < 0) continue;
+
                 int cost = dist[now.cur] + node.acc;
                 if (cost < dist[node.cur]) {
                     dist[node.cur] = cost;
+                    pq.offer(new Node(node.cur, cost));
                 }
             }
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        if (N > K) {
+            dist = new int[N * 2 + 1];
+        } else {
+            dist = new int[K * 2 + 1];
+        }
+
+        for (int i = 0; i < dist.length; i++) {
+            dist[i] = Integer.MAX_VALUE;
+        }
+
+        dist[N] = 0;
+
+        solution(N, K);
+
+        System.out.println(dist[K]);
 
     }
 }
