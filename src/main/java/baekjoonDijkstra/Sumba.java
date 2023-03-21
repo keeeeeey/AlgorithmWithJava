@@ -1,4 +1,4 @@
-package baekjoonPq;
+package baekjoonDijkstra;
 
 import java.io.BufferedReader;
 import java.io.IOException;
