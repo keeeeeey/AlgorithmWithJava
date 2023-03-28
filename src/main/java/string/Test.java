@@ -1,10 +1,10 @@
 package string;
 
+import java.time.LocalDate;
+
 public class Test {
 
     public static void main(String[] args) {
-        String a = "abc";
-        String b = "def";
-        System.out.println(a + b);
+        System.out.println(LocalDate.now().minusDays(1));
     }
 }
