@@ -47,16 +47,25 @@ public class Schedule {
         });
 
         int answer = 0;
-
+        int temp = maxDate;
         for (int i = 0; i < N; i++) {
-            if (arr.get(i).time < maxDate) {
-                Lecture lecture = pq.poll();
-                answer += lecture.money;
-                maxDate = arr.get(i).time;
+            if (arr.get(i).time < temp) {
+                for (int j = 0; j < temp - arr.get(i).time; j++) {
+                    if (pq.size() > 0) {
+                        answer += pq.poll().money;
+                    }
+                }
+                temp = arr.get(i).time;
             }
-            pq.add(arr.get(i));
+            pq.offer(arr.get(i));
         }
-        answer += pq.poll().money;
+
+        for (int i = 0; i < temp; i++) {
+            if (pq.size() > 0) {
+                answer += pq.poll().money;
+            }
+        }
+
         System.out.println(answer);
     }
 }
