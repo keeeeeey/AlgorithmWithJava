@@ -1,40 +1,55 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
-public class Main {
-    public static int solution(int n, int[] arr) {
-        int answer = 0;
-        int stone = -1;
-        while (true) {
-            if (stone + 3 > n - 1) {
-                break;
-            }
+class Static{
+    public int a = 20;
+    static int b = 0;
+}
+public class Main
+{
 
-            int nextStone = 0;
-            int minPoison = 1000;
-            for (int i = stone + 1; i <= stone + 3; i++) {
-                if (arr[i] <= minPoison) {
-                    nextStone = i;
-                    minPoison = arr[i];
-                }
-            }
-            stone = nextStone;
-            answer += minPoison;
+    public static class Point implements Comparable<Point> {
+
+        int x;
+        int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
-        return answer;
+        @Override
+        public int compareTo(Point point) {
+            if (this.x == point.x) {
+                return this.y - point.y;
+            }
+            return this.x - point.x;
+        }
+
     }
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int[] arr = new int[n];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+
+    public static void main(String[] args) {
+        int a;
+        a = 10;
+        Static.b = a;
+        Static st = new Static();
+        System.out.println(Static.b++);
+        System.out.println(st.b);
+        System.out.println(a);
+        System.out.println(st.a);
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        pq.offer(1);
+        pq.offer(2);
+        pq.offer(3);
+        pq.offer(4);
+        pq.offer(5);
+
+        pq.removeIf(i -> (i % 2 == 0));
+
+        for (Integer integer : pq) {
+            System.out.println(integer);
         }
-        System.out.println(solution(n, arr));
     }
 }
