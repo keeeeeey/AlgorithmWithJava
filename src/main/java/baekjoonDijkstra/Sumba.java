@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class Sumba {
 
-    public static class Node {
+    public static class Node implements Comparable<Node> {
         private int cur;
         private int acc;
 
@@ -17,17 +17,17 @@ public class Sumba {
             this.cur = cur;
             this.acc = acc;
         }
+
+        @Override
+        public int compareTo(Node n) {
+            return this.acc - n.acc;
+        }
     }
 
     public static int[] dist;
 
     public static void solution(int N, int K) {
-        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return o1.acc - o2.acc;
-            }
-        });
+        PriorityQueue<Node> pq = new PriorityQueue<>();
 
         pq.offer(new Node(N, 0));
 

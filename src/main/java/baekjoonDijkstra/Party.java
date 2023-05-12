@@ -7,12 +7,17 @@ import java.util.*;
 
 public class Party {
 
-    public static class Node {
+    public static class Node implements Comparable<Node> {
         int cur;
         int acc;
         public Node(int cur, int acc) {
             this.cur = cur;
             this.acc = acc;
+        }
+
+        @Override
+        public int compareTo(Node n) {
+            return this.acc - n.acc;
         }
     }
 
@@ -25,12 +30,8 @@ public class Party {
     public static int[] dist;
 
     public static int dijkstra(int start, int end) {
-        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return o1.acc - o2.acc;
-            }
-        });
+
+        PriorityQueue<Node> pq = new PriorityQueue<>();
 
         dist = new int[N + 1];
 
