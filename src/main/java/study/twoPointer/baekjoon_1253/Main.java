@@ -1,4 +1,4 @@
-package study.twoPointer.backjoon_1253;
+package study.twoPointer.baekjoon_1253;
 
 import java.io.BufferedReader;
 import java.io.IOException;
