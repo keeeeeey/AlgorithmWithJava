@@ -31,6 +31,6 @@ public class Main {
 
     private static int solution() {
 
-
+        return 0;
     }
 }
