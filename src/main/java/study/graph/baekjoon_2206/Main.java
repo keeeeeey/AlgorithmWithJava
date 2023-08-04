@@ -42,13 +42,7 @@ public class Main {
     }
 
     private static int bfs(int N, int M, int[][] graph) {
-        int[][] dist = new int[N][M];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                dist[i][j] = Integer.MAX_VALUE;
-            }
-        }
-        dist[0][0] = 1;
+        int[][][] dist = new int[2][N][M];
         Queue<Node> q = new LinkedList<>();
         q.offer(new Node(0, 0, false));
         while (!q.isEmpty()) {
@@ -56,28 +50,13 @@ public class Main {
             for (int d = 0; d < 4; d++) {
                 int nx = now.x + dx[d];
                 int ny = now.y + dy[d];
+
                 if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
-                    if (graph[nx][ny] == 1) {
-                        if (!now.breakWall) {
-                            if (dist[nx][ny] > dist[now.x][now.y] + 1) {
-                                dist[nx][ny] = dist[now.x][now.y] + 1;
-                                q.offer(new Node(nx, ny, true));
-                            }
-                        }
-                    } else {
-                        if (dist[nx][ny] > dist[now.x][now.y] + 1) {
-                            dist[nx][ny] = dist[now.x][now.y] + 1;
-                            q.offer(new Node(nx, ny, now.breakWall));
-                        }
-                    }
+
                 }
             }
         }
-        if (dist[N - 1][M - 1] == Integer.MAX_VALUE) {
-            return -1;
-        } else {
-            return dist[N - 1][M - 1];
-        }
+        return -1;
     }
 
 }
