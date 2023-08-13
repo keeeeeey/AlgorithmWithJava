@@ -12,10 +12,14 @@ public class Main {
     public static class Node {
         int x;
         int y;
+        int dist;
+        int wall;
 
-        public Node(int x, int y) {
+        public Node(int x, int y, int dist, int wall) {
             this.x = x;
             this.y = y;
+            this.dist = dist;
+            this.wall = wall;
         }
     }
 
@@ -40,42 +44,40 @@ public class Main {
     }
 
     private static int bfs(int N, int M, int[][] graph) {
-        int[][][] dist = new int[N][M][2];
-        dist[0][0][0] = 1;
+        int[][] dist = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                dist[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        dist[0][0] = 0;
         Queue<Node> q = new LinkedList<>();
-        q.offer(new Node(0, 0));
+        q.offer(new Node(0, 0, 1, 0));
         int answer = Integer.MAX_VALUE;
+
         while (!q.isEmpty()) {
             Node now = q.poll();
+
+            if (now.x == N - 1 && now.y == M - 1) {
+                answer = now.dist;
+                break;
+            }
+
             for (int d = 0; d < 4; d++) {
                 int nx = now.x + dx[d];
                 int ny = now.y + dy[d];
 
-                if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
-                    if (nx == N - 1 && ny == M - 1) {
-                        answer = Math.min(answer, dist[now.x][now.y][0] + 1);
-                        continue;
+                if (nx >= 0 && nx < N && ny >= 0 && ny < M && dist[nx][ny] > now.wall) {
+                    if (graph[nx][ny] == 0) {
+                        dist[nx][ny] = now.wall;
+                        q.offer(new Node(nx, ny, now.dist + 1, now.wall));
+                    } else {
+                        if (now.wall == 0) {
+                            dist[nx][ny] = now.wall + 1;
+                            q.offer(new Node(nx, ny, now.dist + 1, now.wall + 1));
+                        }
                     }
 
-                    if (graph[nx][ny] == 0) {
-                        if (dist[nx][ny][0] == 0) {
-                            dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
-                            dist[nx][ny][1] = dist[now.x][now.y][1];
-                            q.offer(new Node(nx, ny));
-                        } else {
-                            if (dist[nx][ny][0] > dist[now.x][now.y][0] + 1) {
-                                dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
-                                dist[nx][ny][1] = dist[now.x][now.y][1];
-                                q.offer(new Node(nx, ny));
-                            }
-                        }
-                    } else {
-                        if (dist[now.x][now.y][1] == 0) {
-                            dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
-                            dist[nx][ny][1] = 1;
-                            q.offer(new Node(nx, ny));
-                        }
-                    }
                 }
             }
         }
