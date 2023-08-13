@@ -12,12 +12,10 @@ public class Main {
     public static class Node {
         int x;
         int y;
-        boolean breakWall;
 
-        public Node(int x, int y, boolean breakWall) {
+        public Node(int x, int y) {
             this.x = x;
             this.y = y;
-            this.breakWall = breakWall;
         }
     }
 
@@ -42,9 +40,11 @@ public class Main {
     }
 
     private static int bfs(int N, int M, int[][] graph) {
-        int[][][] dist = new int[2][N][M];
+        int[][][] dist = new int[N][M][2];
+        dist[0][0][0] = 1;
         Queue<Node> q = new LinkedList<>();
-        q.offer(new Node(0, 0, false));
+        q.offer(new Node(0, 0));
+        int answer = Integer.MAX_VALUE;
         while (!q.isEmpty()) {
             Node now = q.poll();
             for (int d = 0; d < 4; d++) {
@@ -52,11 +52,39 @@ public class Main {
                 int ny = now.y + dy[d];
 
                 if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
+                    if (nx == N - 1 && ny == M - 1) {
+                        answer = Math.min(answer, dist[now.x][now.y][0] + 1);
+                        continue;
+                    }
 
+                    if (graph[nx][ny] == 0) {
+                        if (dist[nx][ny][0] == 0) {
+                            dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
+                            dist[nx][ny][1] = dist[now.x][now.y][1];
+                            q.offer(new Node(nx, ny));
+                        } else {
+                            if (dist[nx][ny][0] > dist[now.x][now.y][0] + 1) {
+                                dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
+                                dist[nx][ny][1] = dist[now.x][now.y][1];
+                                q.offer(new Node(nx, ny));
+                            }
+                        }
+                    } else {
+                        if (dist[now.x][now.y][1] == 0) {
+                            dist[nx][ny][0] = dist[now.x][now.y][0] + 1;
+                            dist[nx][ny][1] = 1;
+                            q.offer(new Node(nx, ny));
+                        }
+                    }
                 }
             }
         }
-        return -1;
+
+        if (answer == Integer.MAX_VALUE) {
+            return -1;
+        } else {
+            return answer;
+        }
     }
 
 }
