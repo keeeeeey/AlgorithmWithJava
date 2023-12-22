@@ -47,34 +47,43 @@ public class Main {
     private static void gameStart() {
         int temp = 0;
         int[][] check = new int[N][M];
+        int[][] check2 = new int[N][M];
 
         Queue<int[]> Q = new LinkedList<>();
         for (int i = N - 1; i >= 0; i--) {
             for (int a = 0; a < M; a++) {
                 if (ch[a] == 1) {
-                    if (arr[i][a] == 1 && check[i][a] == 0) {
+                    if (arr[i][a] == 1 && check2[i][a] == 0) {
                         temp += 1;
-                        check[i][a] = 1;
+                        check2[i][a] = 1;
                         continue;
                     }
                     if (D > 1) Q.offer(new int[]{i, a});
                     boolean isShoot = false;
+                    int dist = 1;
                     while (!Q.isEmpty()) {
+                        dist += 1;
                         for (int k = 0; k < Q.size(); k++) {
                             int[] node = Q.poll();
                             for (int dir = 0; dir < 3; dir++) {
                                 int nx = node[0] + dx[dir];
                                 int ny = node[1] + dy[dir];
-                                if (nx >= 0 && ny >= 0 && ny < M && inDist(i + 1, a, nx, ny)) {
-                                    if (arr[nx][ny] == 1) {
-                                        if (check[i][a] == 0) {
-                                            temp += 1;
-                                            check[i][a] = 1;
-                                        }
+                                if (nx >= 0 && ny >= 0 && ny < M && check[nx][ny] == 0) {
+                                    check[nx][ny] = 1;
+                                    if (arr[nx][ny] == 1 && inDist(i + 1, a, nx, ny, dist) && check2[nx][ny] == 0) {
+                                        temp += 1;
+                                        Q.clear();
                                         isShoot = true;
+                                        check2[nx][ny] = 1;
+                                        for (int q = 0; q < N; q++) {
+                                            for (int w = 0; w < M; w++) {
+                                                check[q][w] = 0;
+                                            }
+                                        }
                                         break;
+                                    } else if (inDist(i + 1, a, nx, ny)) {
+                                        Q.offer(new int[]{nx, ny});
                                     }
-                                    Q.offer(new int[]{nx, ny});
                                 }
                             }
                             if (isShoot) break;
@@ -85,6 +94,10 @@ public class Main {
             }
         }
         answer = Math.max(answer, temp);
+    }
+
+    private static boolean inDist(int r, int a, int j, int k, int dist) {
+        return Math.abs(r - j) + Math.abs(a - k) == dist;
     }
 
     private static boolean inDist(int r, int a, int j, int k) {
