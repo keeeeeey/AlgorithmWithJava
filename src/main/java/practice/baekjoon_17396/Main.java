@@ -48,7 +48,7 @@ public class Main {
         while (!pq.isEmpty()) {
             Node now = pq.poll();
             if (now.cur == N - 1) return ch[N - 1];
-            if (now.cur > ch[now.cur] || arr[now.cur] == 1) continue;
+            if (now.acc > ch[now.cur] || arr[now.cur] == 1) continue;
             for (int i = 0; i < graph.get(now.cur).size(); i++) {
                 int next = graph.get(now.cur).get(i).cur;
                 long cost = now.acc + graph.get(now.cur).get(i).acc;
@@ -73,8 +73,7 @@ public class Main {
 
         @Override
         public int compareTo(Node node) {
-            if (this.acc > node.acc) return 1;
-            return -1;
+            return Long.compare(this.acc, node.acc);
         }
     }
 }
