@@ -26,9 +26,7 @@ public class minCost {
     public static int dijkstra(int A, int B) {
         int[] dist = new int[N + 1];
 
-        for (int i = 0; i <= N; i++) {
-            dist[i] = Integer.MAX_VALUE;
-        }
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
         dist[A] = 0;
 
