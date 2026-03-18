@@ -1,0 +1,56 @@
+package a2026;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class B2458 {
+
+    private static int N, M;
+    private static int[][] arr;
+    private static int[] result;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N + 1][N + 1];
+        result = new int[N + 1];
+
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            arr[a][b] = 1;
+        }
+
+        for (int k = 1; k <= N; k++) {
+            for (int i = 1; i <= N; i++) {
+                for (int j = 1; j <= N; j++) {
+                    if (arr[i][k] == 1 && arr[k][j] == 1) {
+                        arr [i][j] = 1;
+                    }
+                }
+            }
+        }
+
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                if (arr[i][j] == 1) {
+                    result[i] += 1;
+                    result[j] += 1;
+                }
+            }
+        }
+
+        int answer = 0;
+        for (int i = 1; i <= N; i++) {
+            if (result[i] == N - 1) {
+                answer++;
+            }
+        }
+        System.out.println(answer);
+    }
+}
